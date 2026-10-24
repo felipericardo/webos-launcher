@@ -1,6 +1,6 @@
 #!/bin/sh
 # Install/refresh the Home redirect key filter on a webOS 4.x TV and apply it.
-# Usage: deploy.sh <tv-host>          (e.g. deploy.sh 192.168.1.82)
+# Usage: deploy.sh <tv-host>          (e.g. deploy.sh 192.168.1.50)
 # Revert: revert.sh <tv-host>
 set -e
 TV="$1"
