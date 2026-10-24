@@ -1,18 +1,17 @@
-# webos-launcher
+# webos-home-redirect
 
-Custom home launcher for rooted LG webOS TVs, plus the platform pieces that make the Home key
-open it.
+System pieces that make the Home key on rooted LG webOS TVs open a launcher app of your
+choice instead of the native Home. The launcher itself lives in
+[tv-launcher](https://github.com/felipericardo/tv-launcher). Renamed from `webos-launcher` on
+2026-10-24.
 
 ## TVs targeted
 
-- LG 65UN7100PSA, webOS 5.6.2
-- LG 65UK6530PSF, webOS 4.0~4.4
+- LG 65UK6530PSF, webOS 4.0~4.4 (done)
+- LG 65UN7100PSA, webOS 5.6.2 (not written yet)
 
 ## Layout
 
-- `app/` — the launcher UI (not started). Until it exists, the community launcher
-  [rudra-avatar/Hearth](https://github.com/rudra-avatar/Hearth) (formerly
-  `webos-custom-launcher`, app id `tld.my.customlauncher`) is used as a stand-in.
 - `platform/webos4-keyfilter/` — webOS 4.x: makes Home (and Back where it would open Home)
   open the launcher, from the first press after boot.
   - `home-redirect.js` — the filter (`TARGET_APP` = app to open).
