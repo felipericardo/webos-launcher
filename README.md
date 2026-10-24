@@ -1,33 +1,26 @@
-# my-webos-launcher
+# webos-launcher
 
-Custom home launcher for rooted LG webOS TVs (homelab personal project).
+Custom home launcher for the rooted LG webOS TVs (homelab personal project), plus the
+platform pieces that make the Home key open it.
 
-Shared UI across both TVs; only the Home-button takeover and boot-autostart
-mechanism differs per webOS generation (see `platform/`).
+Context, decisions and procedures live in the `ops` repo (vault): project note
+`ops/projects/launcher-casa.md`, ADR-0007, runbook `ops/runbooks/webos4-home-redirect-key-filter.md`.
 
 ## TVs targeted
 
 - Suíte 1 — LG 65UN7100PSA, webOS 5.6.2
 - Sala — LG 65UK6530PSF, webOS 4.0~4.4
 
-Both are rooted (Homebrew Channel) via the procedure in
-`ops/runbooks/root-lg-webos-tv.md`. See `ops/inventory/homelab.md` for details
-(the `ops` repo is this project's context hub, not this repo).
-
 ## Layout
 
-- `app/` — the launcher UI itself (HTML/CSS/JS), shared between both TVs.
-  Written conservatively (no CSS Grid/`gap`/`inset`) to run on both the older
-  Chrome 53 engine (webOS 4.x) and the newer one (webOS 5.x+).
-- `platform/webos4-input-hook/` — LG Input Hook config to remap the physical
-  Home key to this app (webOS 4.x; the official `defaultApps.home` setting
-  doesn't take effect on this generation).
-- `platform/webos5-homehook/` — foreground-app-watching helper + Homebrew
-  `init.d` boot hook (webOS 5.x+).
-- `scripts/` — build, `.ipk` packaging, SSH deploy to the TVs.
+- `app/` — the launcher UI (not started). Until it exists, both TVs run the community
+  launcher rudra-avatar/webos-custom-launcher (`tld.my.customlauncher`) as a stand-in.
+- `platform/webos4-keyfilter/` — Sala (webOS 4.x): a compositor key filter, set through
+  configd `setConfigs`, that makes Home (and Back where it would open Home) open the
+  launcher from the first press after boot.
+  - `home-redirect.js` — the filter (`TARGET_APP` = app to open).
+  - `lg-keyfilters.json` — LG's original filter chain, used to build both payloads.
+  - `deploy.sh <tv-host>` / `revert.sh <tv-host>` — apply / remove it.
+- `platform/webos5-homehook/` — Suíte 1 (webOS 5.x): not written yet.
 
-## Status
-
-Not started yet — currently evaluating existing community launchers
-(Mr-Neutr0n/webos-home, rudra-avatar/webos-custom-launcher) before writing
-this from scratch.
+Packaging and TV deploy helpers: the `webos-tools` repo.
